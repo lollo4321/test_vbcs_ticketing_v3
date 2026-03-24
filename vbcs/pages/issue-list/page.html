@@ -1,0 +1,183 @@
+<!--
+  Page: Issue List (UAT)
+  Description: Vista elenco segnalazioni UAT con filtri, ricerca, ordinamento, paging.
+  VBCS Binding: issue-list page
+-->
+<div class="uat-issue-list" style="max-width: 1280px; margin: 0 auto; padding: 16px 24px;">
+
+  <!-- Row 1: Header -->
+  <div class="oj-flex oj-sm-align-items-center oj-sm-margin-4x-bottom">
+    <div class="oj-flex-item oj-sm-8">
+      <h1 class="oj-typography-heading-lg">Segnalazioni UAT</h1>
+    </div>
+    <div class="oj-flex-item oj-sm-4 oj-sm-justify-content-flex-end" style="display:flex; gap:8px;">
+      <oj-button chroming="callToAction"
+                 on-oj-action="[[$listeners.navigateToCreate]]">
+        Nuova segnalazione
+      </oj-button>
+      <oj-button chroming="outlined"
+                 on-oj-action="[[$listeners.exportCsv]]">
+        Export CSV
+      </oj-button>
+    </div>
+  </div>
+
+  <!-- Row 2: Filtri -->
+  <oj-collapsible expanded="true" class="oj-sm-margin-4x-bottom">
+    <span slot="header">Filtri</span>
+    <div class="oj-panel oj-panel-shadow-sm" style="padding: 12px;">
+      <div class="oj-flex oj-sm-flex-wrap-wrap" style="gap: 12px;">
+        <div class="oj-flex-item oj-sm-3">
+          <oj-label for="filterDomainStream">Domain/Stream</oj-label>
+          <oj-select-single id="filterDomainStream"
+                            data="[[$page.variables.lovDomainStream]]"
+                            value="{{ $page.variables.filterDomainStream }}"
+                            placeholder="Tutti"
+                            on-value-changed="[[$listeners.onFilterChange]]">
+          </oj-select-single>
+        </div>
+        <div class="oj-flex-item oj-sm-2">
+          <oj-label for="filterEnvironment">Environment</oj-label>
+          <oj-select-single id="filterEnvironment"
+                            data="[[$page.variables.lovEnvironment]]"
+                            value="{{ $page.variables.filterEnvironment }}"
+                            placeholder="Tutti"
+                            on-value-changed="[[$listeners.onFilterChange]]">
+          </oj-select-single>
+        </div>
+        <div class="oj-flex-item oj-sm-2">
+          <oj-label for="filterSolutionType">Solution Type</oj-label>
+          <oj-select-single id="filterSolutionType"
+                            data="[[$page.variables.lovSolutionType]]"
+                            value="{{ $page.variables.filterSolutionType }}"
+                            placeholder="Tutti"
+                            on-value-changed="[[$listeners.onFilterChange]]">
+          </oj-select-single>
+        </div>
+        <div class="oj-flex-item oj-sm-2">
+          <oj-label for="filterStatus">Status</oj-label>
+          <oj-select-many id="filterStatus"
+                          data="[[$page.variables.lovStatus]]"
+                          value="{{ $page.variables.filterStatus }}"
+                          placeholder="Tutti"
+                          on-value-changed="[[$listeners.onFilterChange]]">
+          </oj-select-many>
+        </div>
+        <div class="oj-flex-item oj-sm-2">
+          <oj-label for="filterSeverity">Severity</oj-label>
+          <oj-select-many id="filterSeverity"
+                          data="[[$page.variables.lovSeverity]]"
+                          value="{{ $page.variables.filterSeverity }}"
+                          placeholder="Tutti"
+                          on-value-changed="[[$listeners.onFilterChange]]">
+          </oj-select-many>
+        </div>
+        <div class="oj-flex-item oj-sm-1 oj-sm-align-self-flex-end">
+          <oj-button chroming="borderless"
+                     on-oj-action="[[$listeners.resetFilters]]">
+            Reset
+          </oj-button>
+        </div>
+      </div>
+      <div class="oj-flex oj-sm-margin-2x-top">
+        <div class="oj-flex-item oj-sm-12">
+          <oj-input-text id="filterSearch"
+                         value="{{ $page.variables.filterQ }}"
+                         placeholder="Cerca in titolo..."
+                         on-value-changed="[[$listeners.onFilterChange]]">
+            <span slot="start" class="oj-ux-ico-search"></span>
+          </oj-input-text>
+        </div>
+      </div>
+    </div>
+  </oj-collapsible>
+
+  <!-- Row 3: Quick Views (Tabs) -->
+  <oj-tab-bar edge="top"
+              selection="{{ $page.variables.activeTab }}"
+              on-selection-changed="[[$listeners.onTabChange]]"
+              class="oj-sm-margin-4x-bottom">
+    <ul>
+      <li id="tabAll"><span>Tutte</span></li>
+      <li id="tabMine"><span>Le mie</span></li>
+      <li id="tabRetest"><span>Da re-testare</span></li>
+      <li id="tabHighPriority"><span>Alte priorità</span></li>
+    </ul>
+  </oj-tab-bar>
+
+  <!-- Row 4: Tabella Issues -->
+  <oj-table id="issueTable"
+            data="[[$page.variables.issueListDataProvider]]"
+            columns='[
+              {"headerText": "ID",        "field": "issueId",      "sortable": "disabled", "style": "width:60px"},
+              {"headerText": "Titolo",    "field": "title",        "sortable": "disabled"},
+              {"headerText": "Stream",    "field": "domainStream", "sortable": "enabled", "template": "streamCellTemplate"},
+              {"headerText": "Env",       "field": "environment",  "sortable": "enabled", "style": "width:60px"},
+              {"headerText": "Type",      "field": "recordType",   "sortable": "disabled", "style": "width:80px"},
+              {"headerText": "Severity",  "field": "severity",     "sortable": "enabled", "template": "severityCellTemplate"},
+              {"headerText": "Status",    "field": "status",       "sortable": "enabled", "template": "statusCellTemplate"},
+              {"headerText": "Assignee",  "field": "assignee",     "sortable": "enabled", "style": "width:120px"},
+              {"headerText": "Updated",   "field": "updatedOn",    "sortable": "enabled", "style": "width:120px"}
+            ]'
+            selection-mode='{"row": "single"}'
+            on-oj-row-action="[[$listeners.onRowAction]]"
+            scroll-policy="loadMoreOnScroll"
+            class="oj-table-stretch">
+
+    <!-- Severity cell template -->
+    <template slot="severityCellTemplate" data-oj-as="cell">
+      <span class="uat-severity-chip"
+            :class="[[ 'uat-severity-' + cell.data.toLowerCase() ]]">
+        <oj-bind-text value="[[ cell.data ]]"></oj-bind-text>
+      </span>
+    </template>
+
+    <!-- Status cell template -->
+    <template slot="statusCellTemplate" data-oj-as="cell">
+      <span class="uat-status-pill"
+            :class="[[ 'uat-status-' + cell.data.toLowerCase() ]]">
+        <oj-bind-text value="[[ cell.data ]]"></oj-bind-text>
+      </span>
+    </template>
+
+    <!-- Stream cell template -->
+    <template slot="streamCellTemplate" data-oj-as="cell">
+      <oj-badge><oj-bind-text value="[[ cell.data ]]"></oj-bind-text></oj-badge>
+    </template>
+  </oj-table>
+
+  <!-- Footer: Paginazione -->
+  <div class="oj-flex oj-sm-justify-content-space-between oj-sm-align-items-center oj-sm-margin-4x-top">
+    <div class="oj-flex-item">
+      <oj-label for="pageSize">Righe per pagina:</oj-label>
+      <oj-select-single id="pageSize"
+                        data="[[$page.variables.pageSizeOptions]]"
+                        value="{{ $page.variables.pageSize }}"
+                        on-value-changed="[[$listeners.onPageSizeChange]]"
+                        style="width:80px; display:inline-block;">
+      </oj-select-single>
+    </div>
+    <div class="oj-flex-item">
+      <oj-paging-control data="[[$page.variables.issueListDataProvider]]"
+                         page-size="{{ $page.variables.pageSize }}"
+                         mode="page">
+      </oj-paging-control>
+    </div>
+  </div>
+
+  <!-- Sticky FAB (mobile) -->
+  <div class="uat-fab-mobile">
+    <oj-button chroming="callToAction"
+               display="icons"
+               on-oj-action="[[$listeners.navigateToCreate]]">
+      <span slot="startIcon" class="oj-ux-ico-plus"></span>
+      Nuova
+    </oj-button>
+  </div>
+
+  <!-- Toast messages -->
+  <oj-messages id="pageMessages"
+               messages="{{ $page.variables.messages }}"
+               position="top">
+  </oj-messages>
+</div>

@@ -1,0 +1,47 @@
+{
+  "description": "Action chain metadata for issue-list page",
+  "chains": {
+    "onFilterChange": {
+      "description": "Aggiorna DataProvider quando un filtro cambia",
+      "root": "ac_issue-list_filterChange",
+      "variables": {},
+      "actions": {}
+    },
+    "onTabChange": {
+      "description": "Applica preset filtri per quick view tab",
+      "root": "ac_issue-list_tabChange",
+      "variables": {},
+      "actions": {}
+    },
+    "navigateToCreate": {
+      "description": "Naviga a pagina creazione segnalazione",
+      "root": "ac_issue-list_navigateCreate",
+      "variables": {},
+      "actions": {}
+    },
+    "exportCsv": {
+      "description": "Esporta dati correnti in CSV client-side",
+      "root": "ac_issue-list_exportCsv",
+      "variables": {},
+      "actions": {}
+    },
+    "onRowAction": {
+      "description": "Naviga a dettaglio issue al click su riga",
+      "root": "ac_issue-list_rowAction",
+      "variables": {},
+      "actions": {}
+    },
+    "resetFilters": {
+      "description": "Reset tutti i filtri ai valori di default",
+      "root": "ac_issue-list_resetFilters",
+      "variables": {},
+      "actions": {}
+    },
+    "onPageSizeChange": {
+      "description": "Aggiorna pageSize e ricarica tabella",
+      "root": "ac_issue-list_pageSizeChange",
+      "variables": {},
+      "actions": {}
+    }
+  }
+}

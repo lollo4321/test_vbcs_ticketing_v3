@@ -1,0 +1,287 @@
+<!--
+  Page: Issue Detail
+  Description: Dettaglio segnalazione con tabs (Dettaglio, Allegati, Commenti, Workflow & Audit).
+               Azioni workflow contestuali in header.
+  VBCS Binding: issue-detail page
+-->
+<div class="uat-issue-detail" style="max-width: 1280px; margin: 0 auto; padding: 16px 24px;">
+
+  <!-- Header -->
+  <div class="oj-flex oj-sm-align-items-center oj-sm-margin-4x-bottom">
+    <div class="oj-flex-item oj-sm-8">
+      <oj-breadcrumb>
+        <ol>
+          <li><a href="#" on-click="[[$listeners.navigateToList]]">Segnalazioni</a></li>
+          <li>#<oj-bind-text value="[[ $page.variables.issue.issueId ]]"></oj-bind-text></li>
+        </ol>
+      </oj-breadcrumb>
+      <h1 class="oj-typography-heading-lg">
+        #<oj-bind-text value="[[ $page.variables.issue.issueId ]]"></oj-bind-text>
+        &mdash;
+        <oj-bind-text value="[[ $page.variables.issue.title ]]"></oj-bind-text>
+      </h1>
+      <div class="oj-flex" style="gap: 8px; margin-top: 8px;">
+        <span class="uat-status-pill"
+              :class="[[ 'uat-status-' + ($page.variables.issue.status || '').toLowerCase() ]]">
+          <oj-bind-text value="[[ $page.variables.issue.status ]]"></oj-bind-text>
+        </span>
+        <span class="uat-severity-chip"
+              :class="[[ 'uat-severity-' + ($page.variables.issue.severity || '').toLowerCase() ]]">
+          <oj-bind-text value="[[ $page.variables.issue.severity ]]"></oj-bind-text>
+        </span>
+        <oj-badge><oj-bind-text value="[[ $page.variables.issue.environment ]]"></oj-bind-text></oj-badge>
+        <oj-badge><oj-bind-text value="[[ $page.variables.issue.domainStream ]]"></oj-bind-text></oj-badge>
+        <oj-badge><oj-bind-text value="[[ $page.variables.issue.solutionType ]]"></oj-bind-text></oj-badge>
+      </div>
+    </div>
+
+    <!-- Azioni workflow contestuali -->
+    <div class="oj-flex-item oj-sm-4 oj-sm-justify-content-flex-end" style="display:flex; gap:8px; flex-wrap:wrap;">
+      <!-- Proponi soluzione (da IN_PROGRESS) -->
+      <oj-bind-if test="[[ $page.variables.issue.status === 'IN_PROGRESS' ]]">
+        <oj-button chroming="callToAction"
+                   on-oj-action="[[$listeners.proposeSolution]]">
+          Proponi soluzione
+        </oj-button>
+      </oj-bind-if>
+
+      <!-- Invia in re-test (da SOLUTION_PROPOSED) -->
+      <oj-bind-if test="[[ $page.variables.issue.status === 'SOLUTION_PROPOSED' ]]">
+        <oj-button chroming="callToAction"
+                   on-oj-action="[[$listeners.sendToRetest]]">
+          Invia in re-test
+        </oj-button>
+      </oj-bind-if>
+
+      <!-- Conferma risoluzione / Esito negativo (da RETEST) -->
+      <oj-bind-if test="[[ $page.variables.issue.status === 'RETEST' ]]">
+        <oj-button chroming="callToAction"
+                   on-oj-action="[[$listeners.confirmResolution]]">
+          Conferma risoluzione (PASS)
+        </oj-button>
+        <oj-button chroming="danger"
+                   on-oj-action="[[$listeners.reopenFail]]">
+          Esito negativo (FAIL)
+        </oj-button>
+      </oj-bind-if>
+
+      <!-- Chiudi (da RESOLVED) -->
+      <oj-bind-if test="[[ $page.variables.issue.status === 'RESOLVED' ]]">
+        <oj-button chroming="callToAction"
+                   on-oj-action="[[$listeners.closeIssue]]">
+          Chiudi
+        </oj-button>
+      </oj-bind-if>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <oj-tab-bar edge="top"
+              selection="{{ $page.variables.activeTab }}">
+    <ul>
+      <li id="tabDetail"><span>Dettaglio</span></li>
+      <li id="tabAttachments"><span>Allegati</span></li>
+      <li id="tabComments"><span>Commenti</span></li>
+      <li id="tabWorkflow"><span>Workflow &amp; Audit</span></li>
+    </ul>
+  </oj-tab-bar>
+
+  <!-- Tab: Dettaglio -->
+  <oj-bind-if test="[[ $page.variables.activeTab === 'tabDetail' ]]">
+    <div class="oj-panel oj-panel-shadow-sm" style="padding: 16px; margin-top: 16px;">
+      <oj-form-layout max-columns="2" direction="row" readonly="true">
+        <oj-input-text label-hint="Tipo Soluzione" value="[[ $page.variables.issue.solutionType ]]"></oj-input-text>
+        <oj-input-text label-hint="Applicazione/Modulo" value="[[ $page.variables.issue.applicationModule ]]"></oj-input-text>
+        <oj-input-text label-hint="Environment" value="[[ $page.variables.issue.environment ]]"></oj-input-text>
+        <oj-input-text label-hint="Domain/Stream" value="[[ $page.variables.issue.domainStream ]]"></oj-input-text>
+        <oj-input-text label-hint="Use Case" value="[[ $page.variables.issue.useCaseCode ]]"></oj-input-text>
+        <oj-input-text label-hint="URL/Pagina" value="[[ $page.variables.issue.pageUrl ]]"></oj-input-text>
+        <oj-input-text label-hint="Tipo Record" value="[[ $page.variables.issue.recordType ]]"></oj-input-text>
+        <oj-input-text label-hint="Severity" value="[[ $page.variables.issue.severity ]]"></oj-input-text>
+        <oj-input-text label-hint="Priority" value="[[ $page.variables.issue.priority ]]"></oj-input-text>
+        <oj-input-text label-hint="Frequenza" value="[[ $page.variables.issue.frequency ]]"></oj-input-text>
+        <oj-input-text label-hint="Impatti" value="[[ $page.variables.issue.impactFlags ]]" colspan="2"></oj-input-text>
+        <oj-text-area label-hint="Comportamento atteso" value="[[ $page.variables.issue.expectedBehavior ]]" rows="4" colspan="2"></oj-text-area>
+        <oj-text-area label-hint="Comportamento osservato" value="[[ $page.variables.issue.actualBehavior ]]" rows="4" colspan="2"></oj-text-area>
+        <oj-text-area label-hint="Messaggio errore" value="[[ $page.variables.issue.errorMessage ]]" rows="3" colspan="2"></oj-text-area>
+        <oj-text-area label-hint="Prerequisiti" value="[[ $page.variables.issue.prerequisites ]]" rows="3" colspan="2"></oj-text-area>
+        <oj-text-area label-hint="Passi per riprodurre" value="[[ $page.variables.issue.stepsToReproduce ]]" rows="5" colspan="2"></oj-text-area>
+        <oj-input-text label-hint="Riproducibile" value="[[ $page.variables.issue.reproducibleYn === 'Y' ? 'Sì' : 'No' ]]"></oj-input-text>
+        <oj-input-text label-hint="Assegnatario" value="[[ $page.variables.issue.assignee ]]"></oj-input-text>
+        <oj-input-text label-hint="Componente" value="[[ $page.variables.issue.component ]]"></oj-input-text>
+        <oj-input-text label-hint="Target Release" value="[[ $page.variables.issue.targetRelease ]]"></oj-input-text>
+        <oj-input-text label-hint="Creato da" value="[[ $page.variables.issue.createdBy ]]"></oj-input-text>
+        <oj-input-text label-hint="Creato il" value="[[ $page.variables.issue.createdOn ]]"></oj-input-text>
+        <oj-input-text label-hint="Aggiornato da" value="[[ $page.variables.issue.updatedBy ]]"></oj-input-text>
+        <oj-input-text label-hint="Aggiornato il" value="[[ $page.variables.issue.updatedOn ]]"></oj-input-text>
+      </oj-form-layout>
+    </div>
+  </oj-bind-if>
+
+  <!-- Tab: Allegati -->
+  <oj-bind-if test="[[ $page.variables.activeTab === 'tabAttachments' ]]">
+    <div class="oj-panel oj-panel-shadow-sm" style="padding: 16px; margin-top: 16px;">
+      <div class="oj-flex oj-sm-justify-content-space-between oj-sm-align-items-center oj-sm-margin-4x-bottom">
+        <h2 class="oj-typography-heading-sm">Allegati</h2>
+        <oj-file-picker selection-mode="multiple"
+                        on-oj-select="[[$listeners.uploadAttachment]]">
+          <span slot="trigger">+ Upload</span>
+        </oj-file-picker>
+      </div>
+      <oj-table data="[[$page.variables.attachmentsDataProvider]]"
+                columns='[
+                  {"headerText": "Nome",       "field": "fileName"},
+                  {"headerText": "Tipo",       "field": "mimeType",   "style": "width:120px"},
+                  {"headerText": "Dimensione", "field": "fileSize",   "style": "width:100px"},
+                  {"headerText": "Caricato da","field": "uploadedBy", "style": "width:120px"},
+                  {"headerText": "Data",       "field": "uploadedOn", "style": "width:140px"}
+                ]'
+                class="oj-table-stretch">
+      </oj-table>
+    </div>
+  </oj-bind-if>
+
+  <!-- Tab: Commenti -->
+  <oj-bind-if test="[[ $page.variables.activeTab === 'tabComments' ]]">
+    <div class="oj-panel oj-panel-shadow-sm" style="padding: 16px; margin-top: 16px;">
+      <h2 class="oj-typography-heading-sm">Commenti</h2>
+
+      <!-- Nuovo commento -->
+      <div class="oj-flex oj-sm-margin-4x-bottom" style="gap: 8px;">
+        <oj-text-area id="newCommentText"
+                      value="{{ $page.variables.newCommentText }}"
+                      placeholder="Scrivi un commento..."
+                      rows="3"
+                      class="oj-flex-item oj-sm-10">
+        </oj-text-area>
+        <div class="oj-flex-item oj-sm-2" style="display:flex; flex-direction:column; gap:4px;">
+          <oj-select-single id="newCommentVisibility"
+                            value="{{ $page.variables.newCommentVisibility }}"
+                            data="[[$page.variables.lovVisibility]]"
+                            label-hint="Visibilità">
+          </oj-select-single>
+          <oj-button chroming="callToAction"
+                     on-oj-action="[[$listeners.addComment]]">
+            Invia
+          </oj-button>
+        </div>
+      </div>
+
+      <!-- Timeline commenti -->
+      <oj-bind-for-each data="[[$page.variables.commentsDataProvider]]">
+        <template>
+          <div class="uat-comment-item" style="border-bottom: 1px solid #eee; padding: 12px 0;">
+            <div class="oj-flex oj-sm-justify-content-space-between">
+              <strong><oj-bind-text value="[[ $current.data.commentBy ]]"></oj-bind-text></strong>
+              <span class="oj-typography-body-xs">
+                <oj-bind-text value="[[ $current.data.commentOn ]]"></oj-bind-text>
+                <oj-bind-if test="[[ $current.data.visibility === 'INTERNAL' ]]">
+                  <span class="uat-visibility-internal"> (internal)</span>
+                </oj-bind-if>
+              </span>
+            </div>
+            <p><oj-bind-text value="[[ $current.data.commentText ]]"></oj-bind-text></p>
+          </div>
+        </template>
+      </oj-bind-for-each>
+    </div>
+  </oj-bind-if>
+
+  <!-- Tab: Workflow & Audit -->
+  <oj-bind-if test="[[ $page.variables.activeTab === 'tabWorkflow' ]]">
+    <div style="margin-top: 16px;">
+
+      <!-- Card: Soluzione proposta -->
+      <oj-bind-if test="[[ $page.variables.issue.status === 'IN_PROGRESS' || $page.variables.issue.status === 'SOLUTION_PROPOSED' || $page.variables.issue.resolutionNotes ]]">
+        <div class="oj-panel oj-panel-shadow-sm oj-sm-margin-4x-bottom" style="padding: 16px;">
+          <h3 class="oj-typography-heading-xs">Soluzione proposta</h3>
+          <oj-form-layout max-columns="2" direction="row">
+            <oj-text-area label-hint="Resolution Notes *"
+                          value="{{ $page.variables.workflowPayload.resolutionNotes }}"
+                          rows="4"
+                          colspan="2"
+                          :readonly="[[ $page.variables.issue.status !== 'IN_PROGRESS' ]]">
+            </oj-text-area>
+            <oj-input-text label-hint="Fix Version"
+                           value="{{ $page.variables.workflowPayload.fixVersion }}"
+                           :readonly="[[ $page.variables.issue.status !== 'IN_PROGRESS' ]]">
+            </oj-input-text>
+            <oj-input-text label-hint="Fix Environment"
+                           value="{{ $page.variables.workflowPayload.fixEnvironment }}"
+                           :readonly="[[ $page.variables.issue.status !== 'IN_PROGRESS' ]]">
+            </oj-input-text>
+          </oj-form-layout>
+        </div>
+      </oj-bind-if>
+
+      <!-- Card: Re-test -->
+      <oj-bind-if test="[[ $page.variables.issue.status === 'SOLUTION_PROPOSED' || $page.variables.issue.status === 'RETEST' ]]">
+        <div class="oj-panel oj-panel-shadow-sm oj-sm-margin-4x-bottom" style="padding: 16px;">
+          <h3 class="oj-typography-heading-xs">Re-test</h3>
+          <oj-form-layout max-columns="2" direction="row">
+            <oj-text-area label-hint="Istruzioni re-test"
+                          value="{{ $page.variables.workflowPayload.retestInstructions }}"
+                          rows="3"
+                          colspan="2">
+            </oj-text-area>
+            <oj-input-text label-hint="Tester assegnato"
+                           value="[[ $page.variables.issue.retestAssignedTo ]]"
+                           readonly="true">
+            </oj-input-text>
+
+            <oj-bind-if test="[[ $page.variables.issue.status === 'RETEST' ]]">
+              <oj-radioset label-hint="Esito *"
+                           value="{{ $page.variables.workflowPayload.retestOutcome }}">
+                <oj-option value="PASS">PASS</oj-option>
+                <oj-option value="FAIL">FAIL</oj-option>
+              </oj-radioset>
+              <oj-text-area label-hint="Note esito"
+                            value="{{ $page.variables.workflowPayload.retestNotes }}"
+                            rows="3"
+                            colspan="2">
+              </oj-text-area>
+            </oj-bind-if>
+          </oj-form-layout>
+        </div>
+      </oj-bind-if>
+
+      <!-- Card: Chiusura -->
+      <oj-bind-if test="[[ $page.variables.issue.status === 'RESOLVED' ]]">
+        <div class="oj-panel oj-panel-shadow-sm oj-sm-margin-4x-bottom" style="padding: 16px;">
+          <h3 class="oj-typography-heading-xs">Chiusura</h3>
+          <oj-form-layout max-columns="2" direction="row">
+            <oj-select-single label-hint="Closure Reason *"
+                              data="[[$page.variables.lovClosureReason]]"
+                              value="{{ $page.variables.workflowPayload.closureReason }}">
+            </oj-select-single>
+            <oj-input-text label-hint="Evidence Link"
+                           value="{{ $page.variables.workflowPayload.closureEvidenceLink }}"
+                           placeholder="https://...">
+            </oj-input-text>
+          </oj-form-layout>
+        </div>
+      </oj-bind-if>
+
+      <!-- Card: Storico stati (timeline) -->
+      <div class="oj-panel oj-panel-shadow-sm" style="padding: 16px;">
+        <h3 class="oj-typography-heading-xs">Storico stati</h3>
+        <oj-table data="[[$page.variables.statusHistoryDataProvider]]"
+                  columns='[
+                    {"headerText": "Data",      "field": "changedOn",  "style": "width:160px"},
+                    {"headerText": "Da",        "field": "oldStatus",  "style": "width:140px"},
+                    {"headerText": "A",         "field": "newStatus",  "style": "width:140px"},
+                    {"headerText": "Utente",    "field": "changedBy",  "style": "width:120px"},
+                    {"headerText": "Note",      "field": "changeNote"}
+                  ]'
+                  class="oj-table-stretch">
+        </oj-table>
+      </div>
+    </div>
+  </oj-bind-if>
+
+  <!-- Toast -->
+  <oj-messages id="detailMessages"
+               messages="{{ $page.variables.messages }}"
+               position="top">
+  </oj-messages>
+</div>

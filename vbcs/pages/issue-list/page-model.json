@@ -1,0 +1,129 @@
+{
+  "title": "Segnalazioni UAT",
+  "description": "Issue List page - filtri, ricerca, ordinamento, paging",
+  "variables": {
+    "filterDomainStream": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "filterEnvironment": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "filterSolutionType": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "filterStatus": {
+      "type": "string[]",
+      "defaultValue": []
+    },
+    "filterSeverity": {
+      "type": "string[]",
+      "defaultValue": []
+    },
+    "filterQ": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "activeTab": {
+      "type": "string",
+      "defaultValue": "tabAll"
+    },
+    "page": {
+      "type": "number",
+      "defaultValue": 1
+    },
+    "pageSize": {
+      "type": "number",
+      "defaultValue": 20
+    },
+    "sortField": {
+      "type": "string",
+      "defaultValue": "createdOn:desc"
+    },
+    "issueListDataProvider": {
+      "type": "vb/ServiceDataProvider",
+      "defaultValue": {
+        "endpoint": "uat_api_v1/getIssues",
+        "keyAttributes": "issueId",
+        "itemsPath": "data",
+        "uriParameters": {},
+        "responseType": "application/json"
+      }
+    },
+    "lovDomainStream": {
+      "type": "vb/ServiceDataProvider",
+      "defaultValue": {
+        "endpoint": "uat_api_v1/getLov",
+        "keyAttributes": "code",
+        "uriParameters": { "type": "DOMAIN_STREAM" }
+      }
+    },
+    "lovEnvironment": {
+      "type": "vb/ServiceDataProvider",
+      "defaultValue": {
+        "endpoint": "uat_api_v1/getLov",
+        "keyAttributes": "code",
+        "uriParameters": { "type": "ENVIRONMENT" }
+      }
+    },
+    "lovSolutionType": {
+      "type": "vb/ServiceDataProvider",
+      "defaultValue": {
+        "endpoint": "uat_api_v1/getLov",
+        "keyAttributes": "code",
+        "uriParameters": { "type": "SOLUTION_TYPE" }
+      }
+    },
+    "lovStatus": {
+      "type": "vb/ServiceDataProvider",
+      "defaultValue": {
+        "endpoint": "uat_api_v1/getLov",
+        "keyAttributes": "code",
+        "uriParameters": { "type": "STATUS" }
+      }
+    },
+    "lovSeverity": {
+      "type": "vb/ServiceDataProvider",
+      "defaultValue": {
+        "endpoint": "uat_api_v1/getLov",
+        "keyAttributes": "code",
+        "uriParameters": { "type": "SEVERITY" }
+      }
+    },
+    "pageSizeOptions": {
+      "type": "vb/ArrayDataProvider",
+      "defaultValue": {
+        "data": [
+          { "value": 20, "label": "20" },
+          { "value": 50, "label": "50" },
+          { "value": 100, "label": "100" }
+        ],
+        "keyAttributes": "value"
+      }
+    },
+    "messages": {
+      "type": "object[]",
+      "defaultValue": []
+    }
+  },
+  "types": {
+    "IssueListItem": {
+      "issueId":           "number",
+      "title":             "string",
+      "domainStream":      "string",
+      "environment":       "string",
+      "solutionType":      "string",
+      "recordType":        "string",
+      "severity":          "string",
+      "priority":          "string",
+      "status":            "string",
+      "assignee":          "string",
+      "retestAssignedTo":  "string",
+      "useCaseCode":       "string",
+      "createdOn":         "string",
+      "updatedOn":         "string"
+    }
+  }
+}

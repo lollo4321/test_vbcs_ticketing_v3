@@ -1,0 +1,125 @@
+{
+  "title": "Dettaglio Segnalazione",
+  "description": "Issue Detail page with tabs: Dettaglio, Allegati, Commenti, Workflow & Audit",
+  "variables": {
+    "issueId": {
+      "type": "number",
+      "input": "fromUrl",
+      "required": true
+    },
+    "issue": {
+      "type": "object",
+      "defaultValue": {}
+    },
+    "activeTab": {
+      "type": "string",
+      "defaultValue": "tabDetail"
+    },
+    "workflowPayload": {
+      "type": "object",
+      "defaultValue": {
+        "resolutionNotes": "",
+        "fixVersion": "",
+        "fixEnvironment": "",
+        "retestInstructions": "",
+        "retestOutcome": "",
+        "retestNotes": "",
+        "closureReason": "",
+        "closureEvidenceLink": ""
+      }
+    },
+    "newCommentText": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "newCommentVisibility": {
+      "type": "string",
+      "defaultValue": "PUBLIC"
+    },
+    "attachmentsDataProvider": {
+      "type": "vb/ServiceDataProvider",
+      "defaultValue": {
+        "endpoint": "uat_api_v1/getAttachments",
+        "keyAttributes": "attachmentId",
+        "uriParameters": {}
+      }
+    },
+    "commentsDataProvider": {
+      "type": "vb/ServiceDataProvider",
+      "defaultValue": {
+        "endpoint": "uat_api_v1/getComments",
+        "keyAttributes": "commentId",
+        "uriParameters": {}
+      }
+    },
+    "statusHistoryDataProvider": {
+      "type": "vb/ServiceDataProvider",
+      "defaultValue": {
+        "endpoint": "uat_api_v1/getStatusHistory",
+        "keyAttributes": "histId",
+        "uriParameters": {}
+      }
+    },
+    "lovClosureReason": {
+      "type": "vb/ServiceDataProvider",
+      "defaultValue": {
+        "endpoint": "uat_api_v1/getLov",
+        "keyAttributes": "code",
+        "uriParameters": { "type": "CLOSURE_REASON" }
+      }
+    },
+    "lovVisibility": {
+      "type": "vb/ArrayDataProvider",
+      "defaultValue": {
+        "data": [
+          { "value": "PUBLIC", "label": "Public" },
+          { "value": "INTERNAL", "label": "Internal" }
+        ],
+        "keyAttributes": "value"
+      }
+    },
+    "messages": {
+      "type": "object[]",
+      "defaultValue": []
+    }
+  },
+  "types": {
+    "IssueDetail": {
+      "issueId":            "number",
+      "title":              "string",
+      "status":             "string",
+      "severity":           "string",
+      "environment":        "string",
+      "domainStream":       "string",
+      "solutionType":       "string",
+      "applicationModule":  "string",
+      "useCaseCode":        "string",
+      "pageUrl":            "string",
+      "recordType":         "string",
+      "priority":           "string",
+      "frequency":          "string",
+      "impactFlags":        "string",
+      "expectedBehavior":   "string",
+      "actualBehavior":     "string",
+      "errorMessage":       "string",
+      "prerequisites":      "string",
+      "stepsToReproduce":   "string",
+      "reproducibleYn":     "string",
+      "notes":              "string",
+      "assignee":           "string",
+      "component":          "string",
+      "targetRelease":      "string",
+      "resolutionNotes":    "string",
+      "fixVersion":         "string",
+      "fixEnvironment":     "string",
+      "retestAssignedTo":   "string",
+      "retestOutcome":      "string",
+      "retestNotes":        "string",
+      "closureReason":      "string",
+      "createdBy":          "string",
+      "createdOn":          "string",
+      "updatedBy":          "string",
+      "updatedOn":          "string"
+    }
+  }
+}

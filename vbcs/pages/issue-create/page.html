@@ -1,0 +1,249 @@
+<!--
+  Page: Issue Create/Edit
+  Description: Form creazione segnalazione UAT con 4 card, validazioni e helper text.
+  VBCS Binding: issue-create page
+-->
+<div class="uat-issue-create" style="max-width: 1280px; margin: 0 auto; padding: 16px 24px;">
+
+  <!-- Header -->
+  <div class="oj-flex oj-sm-align-items-center oj-sm-margin-4x-bottom">
+    <div class="oj-flex-item oj-sm-8">
+      <oj-breadcrumb>
+        <ol>
+          <li><a href="#" on-click="[[$listeners.navigateToList]]">Segnalazioni</a></li>
+          <li>Nuova</li>
+        </ol>
+      </oj-breadcrumb>
+      <h1 class="oj-typography-heading-lg">Nuova segnalazione UAT</h1>
+    </div>
+    <div class="oj-flex-item oj-sm-4 oj-sm-justify-content-flex-end" style="display:flex; gap:8px;">
+      <oj-button chroming="outlined"
+                 on-oj-action="[[$listeners.saveDraft]]">
+        Salva bozza
+      </oj-button>
+      <oj-button chroming="callToAction"
+                 on-oj-action="[[$listeners.submitIssue]]">
+        Invia
+      </oj-button>
+      <oj-button chroming="borderless"
+                 on-oj-action="[[$listeners.navigateToList]]">
+        Annulla
+      </oj-button>
+    </div>
+  </div>
+
+  <!-- Card A: Contesto -->
+  <div class="oj-panel oj-panel-shadow-sm oj-sm-margin-4x-bottom" style="padding: 16px;">
+    <h2 class="oj-typography-heading-sm">Contesto</h2>
+    <oj-form-layout max-columns="2" direction="row">
+      <oj-radioset id="solutionType"
+                    label-hint="Tipo Soluzione *"
+                    value="{{ $page.variables.issue.solutionType }}"
+                    required="true">
+        <oj-option value="SaaS">SaaS</oj-option>
+        <oj-option value="PaaS">PaaS</oj-option>
+      </oj-radioset>
+
+      <oj-select-single id="applicationModule"
+                        label-hint="Applicazione/Modulo *"
+                        data="[[$page.variables.lovApplicationModule]]"
+                        value="{{ $page.variables.issue.applicationModule }}"
+                        required="true">
+      </oj-select-single>
+
+      <oj-select-single id="environment"
+                        label-hint="Environment *"
+                        data="[[$page.variables.lovEnvironment]]"
+                        value="{{ $page.variables.issue.environment }}"
+                        required="true">
+      </oj-select-single>
+
+      <oj-select-single id="domainStream"
+                        label-hint="Domain/Stream *"
+                        data="[[$page.variables.lovDomainStream]]"
+                        value="{{ $page.variables.issue.domainStream }}"
+                        required="true"
+                        on-value-changed="[[$listeners.onDomainStreamChange]]">
+      </oj-select-single>
+
+      <oj-select-single id="useCaseCode"
+                        label-hint="Use Case"
+                        data="[[$page.variables.lovUseCases]]"
+                        value="{{ $page.variables.issue.useCaseCode }}"
+                        item-text="useCaseTitle">
+      </oj-select-single>
+
+      <oj-input-text id="pageUrl"
+                     label-hint="URL/Pagina"
+                     value="{{ $page.variables.issue.pageUrl }}"
+                     placeholder="https://..."
+                     validators='[{"type": "regexp", "options": {"pattern": "^https?://.*", "messageDetail": "URL non valido"}}]'>
+      </oj-input-text>
+
+      <!-- Condizionale SaaS -->
+      <oj-bind-if test="[[ $page.variables.issue.solutionType === 'SaaS' ]]">
+        <oj-input-text id="tenantPod"
+                       label-hint="Tenant/Pod"
+                       value="{{ $page.variables.issue.tenantPod }}">
+        </oj-input-text>
+      </oj-bind-if>
+
+      <!-- Condizionale PaaS -->
+      <oj-bind-if test="[[ $page.variables.issue.solutionType === 'PaaS' ]]">
+        <oj-input-text id="appVersion"
+                       label-hint="App Version"
+                       value="{{ $page.variables.issue.appVersion }}">
+        </oj-input-text>
+      </oj-bind-if>
+    </oj-form-layout>
+  </div>
+
+  <!-- Card B: Descrizione -->
+  <div class="oj-panel oj-panel-shadow-sm oj-sm-margin-4x-bottom" style="padding: 16px;">
+    <h2 class="oj-typography-heading-sm">Descrizione</h2>
+    <oj-form-layout max-columns="2" direction="row">
+      <oj-input-text id="title"
+                     label-hint="Titolo *"
+                     value="{{ $page.variables.issue.title }}"
+                     required="true"
+                     maxlength="120"
+                     colspan="2">
+      </oj-input-text>
+
+      <oj-select-single id="recordType"
+                        label-hint="Tipo Record *"
+                        data="[[$page.variables.lovRecordType]]"
+                        value="{{ $page.variables.issue.recordType }}"
+                        required="true">
+      </oj-select-single>
+
+      <oj-select-single id="severity"
+                        label-hint="Severity *"
+                        data="[[$page.variables.lovSeverity]]"
+                        value="{{ $page.variables.issue.severity }}"
+                        required="true">
+      </oj-select-single>
+
+      <oj-select-single id="priority"
+                        label-hint="Priority"
+                        data="[[$page.variables.lovPriority]]"
+                        value="{{ $page.variables.issue.priority }}">
+      </oj-select-single>
+
+      <oj-select-single id="frequency"
+                        label-hint="Frequenza"
+                        data="[[$page.variables.lovFrequency]]"
+                        value="{{ $page.variables.issue.frequency }}">
+      </oj-select-single>
+
+      <oj-checkboxset id="impactFlags"
+                      label-hint="Impatti"
+                      value="{{ $page.variables.impactFlagsList }}"
+                      colspan="2">
+        <oj-option value="PROCESS_BLOCKED">Processo bloccato</oj-option>
+        <oj-option value="DATA_ERROR">Dati</oj-option>
+        <oj-option value="PERFORMANCE">Performance</oj-option>
+        <oj-option value="UX">UX</oj-option>
+        <oj-option value="COMPLIANCE">Compliance</oj-option>
+      </oj-checkboxset>
+
+      <oj-text-area id="expectedBehavior"
+                    label-hint="Comportamento atteso *"
+                    value="{{ $page.variables.issue.expectedBehavior }}"
+                    required="true"
+                    rows="4"
+                    colspan="2">
+      </oj-text-area>
+
+      <oj-text-area id="actualBehavior"
+                    label-hint="Comportamento osservato *"
+                    value="{{ $page.variables.issue.actualBehavior }}"
+                    required="true"
+                    rows="4"
+                    colspan="2">
+      </oj-text-area>
+
+      <oj-text-area id="errorMessage"
+                    label-hint="Messaggio errore"
+                    value="{{ $page.variables.issue.errorMessage }}"
+                    rows="3"
+                    colspan="2">
+      </oj-text-area>
+    </oj-form-layout>
+  </div>
+
+  <!-- Card C: Riproducibilità -->
+  <div class="oj-panel oj-panel-shadow-sm oj-sm-margin-4x-bottom" style="padding: 16px;">
+    <h2 class="oj-typography-heading-sm">Riproducibilità</h2>
+    <oj-form-layout max-columns="1" direction="column">
+      <oj-text-area id="prerequisites"
+                    label-hint="Prerequisiti"
+                    value="{{ $page.variables.issue.prerequisites }}"
+                    rows="3">
+      </oj-text-area>
+
+      <oj-text-area id="stepsToReproduce"
+                    label-hint="Passi per riprodurre *"
+                    value="{{ $page.variables.issue.stepsToReproduce }}"
+                    required="true"
+                    rows="5">
+      </oj-text-area>
+
+      <oj-switch id="reproducible"
+                 label-hint="Riproducibile"
+                 value="{{ $page.variables.reproducibleBool }}">
+      </oj-switch>
+
+      <oj-bind-if test="[[ !$page.variables.reproducibleBool ]]">
+        <oj-text-area id="notes"
+                      label-hint="Note aggiuntive *"
+                      value="{{ $page.variables.issue.notes }}"
+                      required="true"
+                      rows="3"
+                      help-hints='{"definition": "Obbligatorio se non riproducibile"}'>
+        </oj-text-area>
+      </oj-bind-if>
+    </oj-form-layout>
+  </div>
+
+  <!-- Card D: Evidenze -->
+  <div class="oj-panel oj-panel-shadow-sm oj-sm-margin-4x-bottom" style="padding: 16px;">
+    <h2 class="oj-typography-heading-sm">Evidenze</h2>
+    <oj-form-layout max-columns="1" direction="column">
+      <oj-file-picker id="attachments"
+                      selection-mode="multiple"
+                      on-oj-select="[[$listeners.onFileSelect]]">
+        <span slot="trigger" class="oj-filepicker-dropzone-text">+ Aggiungi file</span>
+      </oj-file-picker>
+
+      <!-- Lista file selezionati -->
+      <oj-bind-for-each data="[[$page.variables.selectedFiles]]">
+        <template>
+          <div class="oj-flex oj-sm-align-items-center" style="gap: 8px; margin-top: 4px;">
+            <span><oj-bind-text value="[[ $current.data.name ]]"></oj-bind-text></span>
+            <span class="oj-typography-body-xs">(<oj-bind-text value="[[ Math.round($current.data.size/1024) + ' KB' ]]"></oj-bind-text>)</span>
+          </div>
+        </template>
+      </oj-bind-for-each>
+
+      <oj-input-text id="transactionRef"
+                     label-hint="Riferimenti transazione"
+                     value="{{ $page.variables.issue.transactionRef }}"
+                     placeholder="Es. numero documento, ID transazione">
+      </oj-input-text>
+    </oj-form-layout>
+  </div>
+
+  <!-- Footer azioni (ripetuto per comodità) -->
+  <div class="oj-flex oj-sm-justify-content-flex-end" style="gap: 8px; padding: 16px 0;">
+    <oj-button chroming="outlined" on-oj-action="[[$listeners.saveDraft]]">Salva bozza</oj-button>
+    <oj-button chroming="callToAction" on-oj-action="[[$listeners.submitIssue]]">Invia</oj-button>
+    <oj-button chroming="borderless" on-oj-action="[[$listeners.navigateToList]]">Annulla</oj-button>
+  </div>
+
+  <!-- Warning severity alta senza allegati -->
+  <oj-messages id="createMessages"
+               messages="{{ $page.variables.messages }}"
+               position="top">
+  </oj-messages>
+</div>

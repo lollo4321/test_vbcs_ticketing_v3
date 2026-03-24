@@ -1,0 +1,107 @@
+/* =========================================================
+   Page: issue-list
+   Scoped styles — Oracle Redwood design tokens
+   ========================================================= */
+
+.uat-issue-list {
+  font-family: var(--oj-typography-body-md-font-family, 'Oracle Sans', sans-serif);
+}
+
+/* Severity chips */
+.uat-severity-chip {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.uat-severity-blocker {
+  background-color: var(--oj-palette-danger-30, #fde0e0);
+  color: var(--oj-palette-danger-120, #a71d2a);
+}
+
+.uat-severity-high {
+  background-color: var(--oj-palette-warning-30, #fff3cd);
+  color: var(--oj-palette-warning-120, #b35c00);
+}
+
+.uat-severity-medium {
+  background-color: var(--oj-palette-warning-20, #fff8e1);
+  color: var(--oj-palette-warning-100, #c77c00);
+}
+
+.uat-severity-low {
+  background-color: var(--oj-palette-neutral-30, #f0f0f0);
+  color: var(--oj-palette-neutral-120, #5a5a5a);
+}
+
+/* Status pills */
+.uat-status-pill {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.uat-status-new {
+  background-color: var(--oj-palette-info-30, #d6eaf8);
+  color: var(--oj-palette-info-120, #1a5276);
+}
+
+.uat-status-triage {
+  background-color: #e8daef;
+  color: #4a235a;
+}
+
+.uat-status-in_progress {
+  background-color: #d1f2eb;
+  color: #0e6655;
+}
+
+.uat-status-solution_proposed {
+  background-color: #fdebd0;
+  color: #7e5109;
+}
+
+.uat-status-retest {
+  background-color: #e8d5f5;
+  color: #6c3483;
+}
+
+.uat-status-resolved {
+  background-color: var(--oj-palette-success-30, #d4edda);
+  color: var(--oj-palette-success-120, #155724);
+}
+
+.uat-status-closed {
+  background-color: var(--oj-palette-neutral-30, #f0f0f0);
+  color: var(--oj-palette-neutral-120, #5a5a5a);
+}
+
+.uat-status-waiting_info {
+  background-color: #fdf2e9;
+  color: #935116;
+}
+
+.uat-status-draft {
+  background-color: #f5f5f5;
+  color: #888;
+}
+
+/* Mobile FAB */
+.uat-fab-mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .uat-fab-mobile {
+    display: block;
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 100;
+  }
+}

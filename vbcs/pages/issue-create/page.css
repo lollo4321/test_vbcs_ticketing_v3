@@ -1,0 +1,21 @@
+/* =========================================================
+   Page: issue-create
+   Scoped styles — Oracle Redwood design tokens
+   ========================================================= */
+
+.uat-issue-create {
+  font-family: var(--oj-typography-body-md-font-family, 'Oracle Sans', sans-serif);
+}
+
+.uat-issue-create .oj-panel {
+  border-radius: var(--oj-panel-border-radius, 8px);
+}
+
+.uat-issue-create h2 {
+  margin-bottom: 12px;
+  color: var(--oj-core-text-color-primary, #161513);
+}
+
+.uat-issue-create oj-form-layout {
+  --oj-form-layout-column-gap: 16px;
+}

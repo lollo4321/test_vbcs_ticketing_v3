@@ -1,0 +1,148 @@
+{
+  "title": "Nuova segnalazione UAT",
+  "description": "Issue Create/Edit page - form con 4 card e validazioni",
+  "variables": {
+    "issue": {
+      "type": "object",
+      "defaultValue": {
+        "solutionType": "",
+        "applicationModule": "",
+        "environment": "",
+        "domainStream": "",
+        "useCaseCode": "",
+        "pageUrl": "",
+        "tenantPod": "",
+        "appVersion": "",
+        "recordType": "",
+        "severity": "",
+        "priority": "",
+        "frequency": "",
+        "title": "",
+        "expectedBehavior": "",
+        "actualBehavior": "",
+        "errorMessage": "",
+        "prerequisites": "",
+        "stepsToReproduce": "",
+        "notes": "",
+        "transactionRef": ""
+      }
+    },
+    "impactFlagsList": {
+      "type": "string[]",
+      "defaultValue": []
+    },
+    "reproducibleBool": {
+      "type": "boolean",
+      "defaultValue": true
+    },
+    "selectedFiles": {
+      "type": "object[]",
+      "defaultValue": []
+    },
+    "lovEnvironment": {
+      "type": "vb/ServiceDataProvider",
+      "defaultValue": {
+        "endpoint": "uat_api_v1/getLov",
+        "keyAttributes": "code",
+        "uriParameters": { "type": "ENVIRONMENT" }
+      }
+    },
+    "lovDomainStream": {
+      "type": "vb/ServiceDataProvider",
+      "defaultValue": {
+        "endpoint": "uat_api_v1/getLov",
+        "keyAttributes": "code",
+        "uriParameters": { "type": "DOMAIN_STREAM" }
+      }
+    },
+    "lovSolutionType": {
+      "type": "vb/ServiceDataProvider",
+      "defaultValue": {
+        "endpoint": "uat_api_v1/getLov",
+        "keyAttributes": "code",
+        "uriParameters": { "type": "SOLUTION_TYPE" }
+      }
+    },
+    "lovRecordType": {
+      "type": "vb/ServiceDataProvider",
+      "defaultValue": {
+        "endpoint": "uat_api_v1/getLov",
+        "keyAttributes": "code",
+        "uriParameters": { "type": "RECORD_TYPE" }
+      }
+    },
+    "lovSeverity": {
+      "type": "vb/ServiceDataProvider",
+      "defaultValue": {
+        "endpoint": "uat_api_v1/getLov",
+        "keyAttributes": "code",
+        "uriParameters": { "type": "SEVERITY" }
+      }
+    },
+    "lovPriority": {
+      "type": "vb/ServiceDataProvider",
+      "defaultValue": {
+        "endpoint": "uat_api_v1/getLov",
+        "keyAttributes": "code",
+        "uriParameters": { "type": "PRIORITY" }
+      }
+    },
+    "lovFrequency": {
+      "type": "vb/ServiceDataProvider",
+      "defaultValue": {
+        "endpoint": "uat_api_v1/getLov",
+        "keyAttributes": "code",
+        "uriParameters": { "type": "FREQUENCY" }
+      }
+    },
+    "lovApplicationModule": {
+      "type": "vb/ArrayDataProvider",
+      "defaultValue": {
+        "data": [
+          { "value": "Fusion Payables", "label": "Fusion Payables" },
+          { "value": "Fusion Receivables", "label": "Fusion Receivables" },
+          { "value": "Fusion GL", "label": "Fusion GL" },
+          { "value": "Procurement Cloud", "label": "Procurement Cloud" },
+          { "value": "Custom PaaS App", "label": "Custom PaaS App" }
+        ],
+        "keyAttributes": "value"
+      }
+    },
+    "lovUseCases": {
+      "type": "vb/ServiceDataProvider",
+      "defaultValue": {
+        "endpoint": "uat_api_v1/getUsecases",
+        "keyAttributes": "useCaseCode",
+        "uriParameters": {}
+      }
+    },
+    "messages": {
+      "type": "object[]",
+      "defaultValue": []
+    }
+  },
+  "types": {
+    "IssueCreate": {
+      "solutionType":      "string",
+      "applicationModule": "string",
+      "environment":       "string",
+      "domainStream":      "string",
+      "useCaseCode":       "string",
+      "pageUrl":           "string",
+      "tenantPod":         "string",
+      "appVersion":        "string",
+      "recordType":        "string",
+      "severity":          "string",
+      "priority":          "string",
+      "frequency":         "string",
+      "title":             "string",
+      "expectedBehavior":  "string",
+      "actualBehavior":    "string",
+      "errorMessage":      "string",
+      "prerequisites":     "string",
+      "stepsToReproduce":  "string",
+      "notes":             "string",
+      "transactionRef":    "string"
+    }
+  }
+}

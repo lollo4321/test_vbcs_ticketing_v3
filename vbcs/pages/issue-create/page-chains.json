@@ -1,0 +1,35 @@
+{
+  "description": "Action chain metadata for issue-create page",
+  "chains": {
+    "submitIssue": {
+      "description": "Valida e invia la segnalazione (POST /issues)",
+      "root": "ac_issue-create_submit",
+      "variables": {},
+      "actions": {}
+    },
+    "saveDraft": {
+      "description": "Salva bozza (status=DRAFT)",
+      "root": "ac_issue-create_saveDraft",
+      "variables": {},
+      "actions": {}
+    },
+    "navigateToList": {
+      "description": "Torna alla lista segnalazioni",
+      "root": "ac_issue-create_navigateList",
+      "variables": {},
+      "actions": {}
+    },
+    "onDomainStreamChange": {
+      "description": "Ricarica use cases filtrati per domain/stream selezionato",
+      "root": "ac_issue-create_domainStreamChange",
+      "variables": {},
+      "actions": {}
+    },
+    "onFileSelect": {
+      "description": "Gestisce selezione file allegati",
+      "root": "ac_issue-create_fileSelect",
+      "variables": {},
+      "actions": {}
+    }
+  }
+}

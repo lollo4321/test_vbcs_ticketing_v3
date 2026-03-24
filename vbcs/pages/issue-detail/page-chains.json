@@ -1,0 +1,59 @@
+{
+  "description": "Action chain metadata for issue-detail page",
+  "chains": {
+    "loadIssueDetail": {
+      "description": "Carica dettaglio issue all'ingresso nella pagina",
+      "root": "ac_issue-detail_loadDetail",
+      "variables": {},
+      "actions": {}
+    },
+    "proposeSolution": {
+      "description": "Transizione: IN_PROGRESS -> SOLUTION_PROPOSED",
+      "root": "ac_issue-detail_proposeSolution",
+      "variables": {},
+      "actions": {}
+    },
+    "sendToRetest": {
+      "description": "Transizione: SOLUTION_PROPOSED -> RETEST",
+      "root": "ac_issue-detail_sendToRetest",
+      "variables": {},
+      "actions": {}
+    },
+    "confirmResolution": {
+      "description": "Transizione: RETEST -> RESOLVED (PASS)",
+      "root": "ac_issue-detail_confirmResolution",
+      "variables": {},
+      "actions": {}
+    },
+    "reopenFail": {
+      "description": "Transizione: RETEST -> IN_PROGRESS (FAIL)",
+      "root": "ac_issue-detail_reopenFail",
+      "variables": {},
+      "actions": {}
+    },
+    "closeIssue": {
+      "description": "Transizione: RESOLVED -> CLOSED",
+      "root": "ac_issue-detail_close",
+      "variables": {},
+      "actions": {}
+    },
+    "addComment": {
+      "description": "Aggiunge un commento alla issue",
+      "root": "ac_issue-detail_addComment",
+      "variables": {},
+      "actions": {}
+    },
+    "uploadAttachment": {
+      "description": "Upload allegato alla issue",
+      "root": "ac_issue-detail_uploadAttachment",
+      "variables": {},
+      "actions": {}
+    },
+    "navigateToList": {
+      "description": "Torna alla lista segnalazioni",
+      "root": "ac_issue-detail_navigateList",
+      "variables": {},
+      "actions": {}
+    }
+  }
+}

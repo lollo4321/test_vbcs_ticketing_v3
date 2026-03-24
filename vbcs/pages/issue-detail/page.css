@@ -1,0 +1,52 @@
+/* =========================================================
+   Page: issue-detail
+   Scoped styles — Oracle Redwood design tokens
+   ========================================================= */
+
+.uat-issue-detail {
+  font-family: var(--oj-typography-body-md-font-family, 'Oracle Sans', sans-serif);
+}
+
+/* Reuse severity/status chips from issue-list */
+.uat-severity-chip {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.uat-severity-blocker  { background-color: #fde0e0; color: #a71d2a; }
+.uat-severity-high     { background-color: #fff3cd; color: #b35c00; }
+.uat-severity-medium   { background-color: #fff8e1; color: #c77c00; }
+.uat-severity-low      { background-color: #f0f0f0; color: #5a5a5a; }
+
+.uat-status-pill {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.uat-status-new               { background-color: #d6eaf8; color: #1a5276; }
+.uat-status-triage             { background-color: #e8daef; color: #4a235a; }
+.uat-status-in_progress        { background-color: #d1f2eb; color: #0e6655; }
+.uat-status-solution_proposed  { background-color: #fdebd0; color: #7e5109; }
+.uat-status-retest             { background-color: #e8d5f5; color: #6c3483; }
+.uat-status-resolved           { background-color: #d4edda; color: #155724; }
+.uat-status-closed             { background-color: #f0f0f0; color: #5a5a5a; }
+.uat-status-waiting_info       { background-color: #fdf2e9; color: #935116; }
+.uat-status-draft              { background-color: #f5f5f5; color: #888; }
+
+.uat-visibility-internal {
+  color: var(--oj-palette-warning-100, #c77c00);
+  font-style: italic;
+  font-size: 11px;
+}
+
+.uat-comment-item p {
+  margin: 4px 0 0 0;
+  white-space: pre-wrap;
+}
