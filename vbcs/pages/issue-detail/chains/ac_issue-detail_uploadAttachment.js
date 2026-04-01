@@ -17,10 +17,12 @@ define(['vb/action/actionChain', 'vb/action/actions'],
         if (!files || files.length === 0) return;
 
         for (var i = 0; i < files.length; i++) {
+          var formData = new FormData();
+          formData.append('file', files[i], files[i].name);
           await Actions.callRestEndpoint(context, {
             endpoint: 'uat_api_v1/postAttachments',
             uriParams: { id: $page.variables.issueId },
-            body: files[i],
+            body: formData,
             contentType: 'multipart/form-data'
           });
         }

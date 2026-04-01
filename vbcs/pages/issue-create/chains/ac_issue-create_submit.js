@@ -75,10 +75,12 @@ define(['vb/action/actionChain', 'vb/action/actions'],
           // Upload allegati
           for (var i = 0; i < $page.variables.selectedFiles.length; i++) {
             var file = $page.variables.selectedFiles[i];
+            var formData = new FormData();
+            formData.append('file', file, file.name);
             await Actions.callRestEndpoint(context, {
               endpoint: 'uat_api_v1/postAttachments',
               uriParams: { id: issueId },
-              body: file,
+              body: formData,
               contentType: 'multipart/form-data'
             });
           }

@@ -121,6 +121,33 @@
       "defaultValue": []
     }
   },
+  "eventListeners": {
+    "navigateToList": {
+      "chains": [
+        { "chainId": "navigateToList" }
+      ]
+    },
+    "saveDraft": {
+      "chains": [
+        { "chainId": "saveDraft" }
+      ]
+    },
+    "submitIssue": {
+      "chains": [
+        { "chainId": "submitIssue" }
+      ]
+    },
+    "onDomainStreamChange": {
+      "chains": [
+        { "chainId": "onDomainStreamChange" }
+      ]
+    },
+    "onFileSelect": {
+      "chains": [
+        { "chainId": "onFileSelect" }
+      ]
+    }
+  },
   "types": {
     "IssueCreate": {
       "solutionType":      "string",

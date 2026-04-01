@@ -83,6 +83,35 @@
       "defaultValue": []
     }
   },
+  "eventListeners": {
+    "vbEnter": {
+      "chains": [{ "chainId": "loadIssueDetail" }]
+    },
+    "navigateToList": {
+      "chains": [{ "chainId": "navigateToList" }]
+    },
+    "proposeSolution": {
+      "chains": [{ "chainId": "proposeSolution" }]
+    },
+    "sendToRetest": {
+      "chains": [{ "chainId": "sendToRetest" }]
+    },
+    "confirmResolution": {
+      "chains": [{ "chainId": "confirmResolution" }]
+    },
+    "reopenFail": {
+      "chains": [{ "chainId": "reopenFail" }]
+    },
+    "closeIssue": {
+      "chains": [{ "chainId": "closeIssue" }]
+    },
+    "uploadAttachment": {
+      "chains": [{ "chainId": "uploadAttachment" }]
+    },
+    "addComment": {
+      "chains": [{ "chainId": "addComment" }]
+    }
+  },
   "types": {
     "IssueDetail": {
       "issueId":            "number",

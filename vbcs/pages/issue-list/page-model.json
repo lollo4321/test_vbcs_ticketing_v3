@@ -108,6 +108,29 @@
       "defaultValue": []
     }
   },
+  "eventListeners": {
+    "navigateToCreate": {
+      "chains": [{ "chainId": "navigateToCreate" }]
+    },
+    "exportCsv": {
+      "chains": [{ "chainId": "exportCsv" }]
+    },
+    "onFilterChange": {
+      "chains": [{ "chainId": "onFilterChange" }]
+    },
+    "resetFilters": {
+      "chains": [{ "chainId": "resetFilters" }]
+    },
+    "onTabChange": {
+      "chains": [{ "chainId": "onTabChange" }]
+    },
+    "onRowAction": {
+      "chains": [{ "chainId": "onRowAction" }]
+    },
+    "onPageSizeChange": {
+      "chains": [{ "chainId": "onPageSizeChange" }]
+    }
+  },
   "types": {
     "IssueListItem": {
       "issueId":           "number",
